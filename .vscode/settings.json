@@ -1,9 +1,2 @@
 {
-  "terminal.integrated.profiles.windows": {
-    "PowerShell": {
-      "path": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
-      "icon": "terminal-powershell"
-    }
-  },
-  "terminal.integrated.defaultProfile.windows": "PowerShell"
 }

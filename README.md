@@ -36,11 +36,16 @@ Launch the Streamlit app:
 streamlit run streamlit_app.py
 
 🛠 Technologies Used
-Python 3.x
-OpenWeather API
-Streamlit
-Pandas / NumPy / Matplotlib
-dotenv
+Python 3.9+
+OpenWeather API – live weather and temperature data
+Streamlit – for building the interactive web app
+Requests – for API calls
+Python-dotenv – for securely managing API keys
+Pandas – for data handling and transformation
+NumPy – for numerical processing
+Matplotlib – for basic plotting
+Plotly – for interactive visualizations (in Streamlit)
+JSON & OS libraries – for data storage and file management
 
 📌 Notes
 The project is modularized to reflect best practices in scientific computing.

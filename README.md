@@ -22,7 +22,8 @@ climate-data-project/
 │
 ├── .env                        # Contains your OpenWeather API key (not committed)
 ├── requirements.txt            # Required Python packages
-└── README.md                   # Project documentation (this file)
+└── README.md                   # Project documentation
+
 
 ---
 

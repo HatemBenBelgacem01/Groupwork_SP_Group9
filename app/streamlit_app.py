@@ -45,7 +45,7 @@ st.metric("Trend Slope (°C/year)", f"{slope:.3f}")
 st.metric("p-value", f"{p_value:.4f}")
 st.metric("R²", f"{r_value**2:.3f}")
 
-# --- Optional: LLM Summary ---
+# --- Optional: LLM Summary via Hugging Face ---
 if "HF_API_KEY" in st.secrets:
     from transformers import pipeline
     from huggingface_hub import login
@@ -53,6 +53,7 @@ if "HF_API_KEY" in st.secrets:
     login(st.secrets["HF_API_KEY"])
     summarizer = pipeline("summarization", model="sshleifer/distilbart-cnn-12-6")
 
+    # Build summary input text based on data
     text = (
         f"From 2014 to 2023, {city}'s average max temperature rose from "
         f"{df_city['AvgMaxTemp'].iloc[0]:.1f}°C to {df_city['AvgMaxTemp'].iloc[-1]:.1f}°C. "
@@ -60,6 +61,16 @@ if "HF_API_KEY" in st.secrets:
         f"indicating {'statistical significance' if p_value < 0.05 else 'no significant trend'}."
     )
 
-    summary = summarizer(text, max_length=60, min_length=20, do_sample=False)
-    st.subheader("🧠 LLM Summary")
-    st.write(summary[0]["summary_text"])
+    # Show input text for transparency (optional)
+    st.text_area("🔍 Summary Input Text", value=text, height=120)
+
+    # Button to trigger the LLM
+    if st.button("🧠 Generate Summary"):
+        try:
+            summary = summarizer(text, max_length=60, min_length=20, do_sample=False)
+            st.subheader("🧠 LLM Summary")
+            st.write(summary[0]["summary_text"])
+        except Exception as e:
+            st.error(f"❌ LLM failed: {e}")
+else:
+    st.info("🔐 Hugging Face API key not found. Add it to `.streamlit/secrets.toml` to enable summaries.")

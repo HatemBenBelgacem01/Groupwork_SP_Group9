@@ -2,9 +2,14 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import sqlite3
+import os
 
-# Load data from SQLite
-conn = sqlite3.connect("climate_data.db")
+# Dynamically get absolute path to the database
+base_dir = os.path.dirname(__file__)
+db_path = os.path.join(base_dir, "..", "notebooks", "climate_data.db")
+
+conn = sqlite3.connect(db_path)
+
 df = pd.read_sql_query("SELECT * FROM avg_temperatures", conn)
 
 # UI

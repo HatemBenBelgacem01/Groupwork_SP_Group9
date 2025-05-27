@@ -1,25 +1,63 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
 import sqlite3
-import os
+import matplotlib.pyplot as plt
+from scipy.stats import linregress
 
-# Dynamically get absolute path to the database
-base_dir = os.path.dirname(__file__)
-db_path = os.path.join(base_dir, "..", "notebooks", "climate_data.db")
+# --- Load Data ---
+DB_PATH = "../notebooks/climate_data.db"
 
-conn = sqlite3.connect(db_path)
+@st.cache_data
+def load_data():
+    conn = sqlite3.connect(DB_PATH)
+    df = pd.read_sql_query("SELECT * FROM avg_temperatures", conn)
+    conn.close()
+    return df
 
-df = pd.read_sql_query("SELECT * FROM avg_temperatures", conn)
+df = load_data()
 
-# UI
-st.title("Swiss Climate Trends (2014–2023)")
+# --- Page UI ---
+st.title("🌍 European Climate Trends (2014–2023)")
+st.subheader("Average Maximum Temperature by City")
 
+# City selection
 city = st.selectbox("Choose a city", df["City"].unique())
 df_city = df[df["City"] == city]
 
-st.line_chart(df_city.set_index("Year")["AvgMaxTemp"])
+# --- Trend Analysis ---
+slope, intercept, r_value, p_value, _ = linregress(df_city["Year"], df_city["AvgMaxTemp"])
+predicted = intercept + slope * df_city["Year"]
 
-# Optional stats
-st.write("Average temperature over 10 years:")
-st.metric(label="Average Max Temp (°C)", value=f"{df_city['AvgMaxTemp'].mean():.2f}")
+# --- Line Chart ---
+fig, ax = plt.subplots()
+ax.plot(df_city["Year"], df_city["AvgMaxTemp"], marker='o', label="Observed")
+ax.plot(df_city["Year"], predicted, color='red', linestyle='--', label="Trend")
+ax.set_title(f"{city} – Avg Max Temp Trend")
+ax.set_xlabel("Year")
+ax.set_ylabel("Temperature (°C)")
+ax.legend()
+st.pyplot(fig)
+
+# --- Metrics ---
+st.metric("Trend Slope (°C/year)", f"{slope:.3f}")
+st.metric("p-value", f"{p_value:.4f}")
+st.metric("R²", f"{r_value**2:.3f}")
+
+# --- Optional: LLM Summary ---
+if "HF_API_KEY" in st.secrets:
+    from transformers import pipeline
+    from huggingface_hub import login
+
+    login(st.secrets["HF_API_KEY"])
+    summarizer = pipeline("summarization", model="sshleifer/distilbart-cnn-12-6")
+
+    text = (
+        f"From 2014 to 2023, {city}'s average max temperature rose from "
+        f"{df_city['AvgMaxTemp'].iloc[0]:.1f}°C to {df_city['AvgMaxTemp'].iloc[-1]:.1f}°C. "
+        f"The trend slope was {slope:.3f} with a p-value of {p_value:.4f}, "
+        f"indicating {'statistical significance' if p_value < 0.05 else 'no significant trend'}."
+    )
+
+    summary = summarizer(text, max_length=60, min_length=20, do_sample=False)
+    st.subheader("🧠 LLM Summary")
+    st.write(summary[0]["summary_text"])

@@ -1,15 +1,15 @@
-##🌡️ Climate Data Explorer: A Scientific Programming Project
+## 🌡️ Climate Data Explorer: A Scientific Programming Project
 
 This project was developed as part of a Scientific Programming course and investigates climate trends using temperature data from the OpenWeather API. The goal is to demonstrate scientific coding practices, modular structure, and interactive visualization via a Streamlit dashboard.
 
 ---
 
-##📚 Project Overview
+## 📚 Project Overview
 We fetch and analyze real-time temperature data from various cities using the OpenWeather API. The project is structured in clearly separated parts and culminates in a Streamlit-based web application that visualizes temperature trends.
 
 ---
 
-##🧩 Project Structure
+## 🧩 Project Structure
 climate-data-project/
 │
 ├── part01_fetch_data.py        # Fetches temperature data via OpenWeather API
@@ -26,7 +26,7 @@ climate-data-project/
 
 ---
 
-##🔍 Features
+## 🔍 Features
 🌍 Fetch live temperature data from selected cities
 🧹 Clean and structure raw API responses
 📊 Analyze temperature trends and variations
@@ -35,7 +35,7 @@ climate-data-project/
 
 ---
 
-##🚀 How to Run
+## 🚀 How to Run
 Install dependencies:
 pip install -r requirements.txt
 Set your API-Key:
@@ -45,7 +45,7 @@ streamlit run streamlit_app.py
 
 ---
 
-##🛠 Technologies Used
+## 🛠 Technologies Used
 Python 3.9+
 OpenWeather API – live weather and temperature data
 Streamlit – for building the interactive web app
@@ -59,7 +59,7 @@ JSON & OS libraries – for data storage and file management
 
 ---
 
-##📌 Notes
+## 📌 Notes
 The project is modularized to reflect best practices in scientific computing.
 The temperature data is stored locally to allow offline analysis and reproducibility.
 Cities and parameters can easily be customized in the source files.

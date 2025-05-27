@@ -2,8 +2,12 @@
 
 This project was developed as part of a Scientific Programming course and investigates climate trends using temperature data from the OpenWeather API. The goal is to demonstrate scientific coding practices, modular structure, and interactive visualization via a Streamlit dashboard.
 
+---
+
 ##📚 Project Overview
 We fetch and analyze real-time temperature data from various cities using the OpenWeather API. The project is structured in clearly separated parts and culminates in a Streamlit-based web application that visualizes temperature trends.
+
+---
 
 ##🧩 Project Structure
 climate-data-project/
@@ -20,12 +24,16 @@ climate-data-project/
 ├── requirements.txt            # Required Python packages
 └── README.md                   # Project documentation (this file)
 
+---
+
 ##🔍 Features
 🌍 Fetch live temperature data from selected cities
 🧹 Clean and structure raw API responses
 📊 Analyze temperature trends and variations
 📈 Visualize results in an interactive Streamlit dashboard
 🔐 API key stored safely using .env
+
+---
 
 ##🚀 How to Run
 Install dependencies:
@@ -34,6 +42,8 @@ Set your API-Key:
 API_KEY=your_api_key_here
 Launch the Streamlit app:
 streamlit run streamlit_app.py
+
+---
 
 ##🛠 Technologies Used
 Python 3.9+
@@ -46,6 +56,8 @@ NumPy – for numerical processing
 Matplotlib – for basic plotting
 Plotly – for interactive visualizations (in Streamlit)
 JSON & OS libraries – for data storage and file management
+
+---
 
 ##📌 Notes
 The project is modularized to reflect best practices in scientific computing.

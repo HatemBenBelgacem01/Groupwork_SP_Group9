@@ -3,14 +3,16 @@ import pandas as pd
 import sqlite3
 import matplotlib.pyplot as plt
 from scipy.stats import linregress
+import os
 
-# --- Load Data ---
-DB_PATH = "../notebooks/climate_data.db"
+# Set correct database path
+BASE_DIR = os.path.dirname(__file__)
+DB_PATH = os.path.join(BASE_DIR, "..", "climate_data.db")
 
 @st.cache_data
 def load_data():
     conn = sqlite3.connect(DB_PATH)
-    df = pd.read_sql_query("SELECT * FROM avg_temperatures", conn)
+    df = pd.read_sql_query("SELECT * FROM avg_temperatures", conn)  # Or avg_temperatures_cleaned
     conn.close()
     return df
 
